@@ -51,7 +51,7 @@
     ]},
       {
         "type": "ansible-local",
-        "playbook_file": "tomcat9-install.yml"
+        "playbook_file": "tomcat.yml"
       }
       ]
   
