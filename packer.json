@@ -1,19 +1,15 @@
 {
     "variables": {
-      "ami_target_name": "packer_baseimage",
-      "ami_source_name": "myown-image*",
-      "ami_source_owner": "648194886491",
+      "ami_target_name": "tomcat-ami",
+      "ami_source_name": "amazon/al2023-ami-2023.3.20231218.0-kernel-6.1-x86_64",
+      "ami_source_owner": "226340879532",
       "ssh_username": "ec2-user",
-      "aws_access_key": "",
-      "aws_secret_key": ""
     },
     "builders": [
       {
         "type": "amazon-ebs",
-        "access_key": "{{user `aws_access_key`}}",
-        "secret_key": "{{user `aws_secret_key`}}",
-        "region": "eu-west-2",
-        "ami_users": "648194886491",
+        "region": "ap-northeast-1",
+        "ami_users": "226340879532",
         "source_ami_filter": {
           "filters": {
             "virtualization-type": "hvm",
@@ -28,8 +24,8 @@
         "instance_type": "t2.micro",
         "ssh_username": "{{user `ssh_username`}}",
         "ami_name": "{{user `ami_target_name`}}-{{isotime \"2006-01-02\"}}",
-        "vpc_id": "vpc-a55717cd",
-        "subnet_id": "subnet-5d861027",
+        "vpc_id": "vpc-05eff7b166435d1b3",
+        "subnet_id": "subnet-0e072451cf4d8ba73",
         "ssh_pty": "true",
         "tags": {
           "Product": "sales",
@@ -47,18 +43,16 @@
         ]
       }
     ],
-    "provisioners": [
-    
-         {
+     "provisioners": [ {
         "type": "shell",
-        "scripts": "packages.sh"
-      }
-      ],
-    "post-processors": [
+        "inline": [
+        "sudo yum update -y",
+        "sudo yum install ansible -y"
+    ]},
       {
-        "type": "manifest",
-        "output": "manifest.json",
-        "strip_path": true
+        "type": "ansible-local",
+        "playbook_file": "tomcat9-install.yml"
       }
-    ]
+      ]
+  
   }
