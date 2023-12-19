@@ -3,7 +3,7 @@
       "ami_target_name": "tomcat-ami",
       "ami_source_name": "amazon/al2023-ami-2023.3.20231218.0-kernel-6.1-x86_64",
       "ami_source_owner": "226340879532",
-      "ssh_username": "ec2-user",
+      "ssh_username": "ec2-user"
     },
     "builders": [
       {
